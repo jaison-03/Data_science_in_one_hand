@@ -1,0 +1,14 @@
+__pycache__/
+.pytest_cache/
+.env
+.venv/
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+chroma_db/
+faiss_index/
+uploads/*
+!uploads/.gitkeep
+database/*
+!database/.gitkeep
