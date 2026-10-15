@@ -1,0 +1,4 @@
+Synthetic example for software demonstration only.
+The patient reports headache, nausea, and fever for two days.
+The patient has a history of asthma and was prescribed aspirin 100 mg once daily.
+No allergies were reported in this synthetic note.

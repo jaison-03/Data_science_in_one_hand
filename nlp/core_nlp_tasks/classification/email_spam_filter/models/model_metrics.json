@@ -1,0 +1,127 @@
+{
+  "best_model": "Multinomial Naive Bayes",
+  "best_model_metrics": {
+    "accuracy": 0.7,
+    "precision": 0.625,
+    "recall": 1.0,
+    "f1_score": 0.7692307692307693,
+    "roc_auc": 0.9600000000000001,
+    "confusion_matrix": [
+      [
+        2,
+        3
+      ],
+      [
+        0,
+        5
+      ]
+    ],
+    "confusion_labels": [
+      "ham",
+      "spam"
+    ],
+    "roc_curve": {
+      "false_positive_rate": [
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.2,
+        1.0
+      ],
+      "true_positive_rate": [
+        0.0,
+        0.2,
+        0.8,
+        0.8,
+        1.0,
+        1.0
+      ]
+    },
+    "test_samples": 10
+  },
+  "model_comparison": {
+    "Multinomial Naive Bayes": {
+      "accuracy": 0.7,
+      "precision": 0.625,
+      "recall": 1.0,
+      "f1_score": 0.7692307692307693,
+      "roc_auc": 0.9600000000000001,
+      "confusion_matrix": [
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          5
+        ]
+      ],
+      "confusion_labels": [
+        "ham",
+        "spam"
+      ],
+      "roc_curve": {
+        "false_positive_rate": [
+          0.0,
+          0.0,
+          0.0,
+          0.2,
+          0.2,
+          1.0
+        ],
+        "true_positive_rate": [
+          0.0,
+          0.2,
+          0.8,
+          0.8,
+          1.0,
+          1.0
+        ]
+      },
+      "test_samples": 10
+    },
+    "Logistic Regression": {
+      "accuracy": 0.7,
+      "precision": 0.625,
+      "recall": 1.0,
+      "f1_score": 0.7692307692307693,
+      "roc_auc": 0.92,
+      "confusion_matrix": [
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          5
+        ]
+      ],
+      "confusion_labels": [
+        "ham",
+        "spam"
+      ],
+      "roc_curve": {
+        "false_positive_rate": [
+          0.0,
+          0.0,
+          0.0,
+          0.2,
+          0.2,
+          1.0
+        ],
+        "true_positive_rate": [
+          0.0,
+          0.2,
+          0.6,
+          0.6,
+          1.0,
+          1.0
+        ]
+      },
+      "test_samples": 10
+    }
+  },
+  "training_samples": 40,
+  "dataset": "Built-in synthetic demonstration data"
+}
