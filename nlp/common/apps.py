@@ -67,12 +67,6 @@ PROFILES: dict[str, dict[str, str]] = {
         "prompt": "Answer helpfully within the user's specified domain. Be clear about uncertainty, do not claim credentials, and distinguish general information from professional advice when appropriate.",
         "label": "Question",
     },
-    "english_to_spanish_translator": {
-        "title": "English to Spanish Translator",
-        "description": "Translate English text into natural Spanish while retaining meaning and tone.",
-        "prompt": "Translate the following English text into natural Spanish. Preserve meaning, names, formatting, and tone. Return only the translation.",
-        "label": "English text",
-    },
     "grammar_corrector": {
         "title": "Grammar Corrector",
         "description": "Correct grammar, spelling, and punctuation without changing the author's intent.",
@@ -680,7 +674,13 @@ def _heuristic_pos_tags(text: str) -> list[tuple[str, str]]:
 
 
 def render_app(profile_id: str) -> None:
-    if profile_id in PROFILES:
+    if profile_id == "finance_agentic_chatbot":
+        from nlp.advanced_nlp_and_applications.dialogue_systems.finance_agentic_chatbot.app import (
+            render_app as render_finance_chatbot,
+        )
+
+        render_finance_chatbot(embed=True)
+    elif profile_id in PROFILES:
         _render_groq(profile_id)
     elif profile_id in {"speech_to_text_transcriber", "emotion_detection_from_voice"}:
         _render_audio(profile_id)

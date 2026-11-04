@@ -24,7 +24,7 @@ PROJECTS = {
     "FAQ Chatbot": "faq_chatbot",
     "Information Retrieval Engine": "information_retrieval_engine",
     "Domain-Specific Chatbot": "domain_chatbot",
-    "English to Spanish Translator": "english_to_spanish_translator",
+    "Finance Agentic AI Chatbot": "finance_agentic_chatbot",
     "Grammar Corrector": "grammar_corrector",
     "Context-Aware Chatbot": "context_aware_chatbot",
     "Simple Python Code Generator": "code_generator",

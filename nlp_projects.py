@@ -36,7 +36,7 @@ BRANCHES = [
         "side": "left",
         "position": "bottom",
         "categories": [
-            ("Sequence-to-Sequence", ["English to Spanish Translator", "Grammar Corrector"]),
+            ("Sequence-to-Sequence", ["Grammar Corrector"]),
             ("Transformer Models", ["Context-Aware Chatbot", "Code Generator [Simple Python]", "Blog Post Idea Generator"]),
             ("Creative Writing", ["Poetry Writing Assistant"]),
         ],
@@ -48,7 +48,7 @@ BRANCHES = [
         "position": "bottom",
         "categories": [
             ("Speech Processing", ["Speech-to-Text Transcriber", "Emotion Detection from Voice"]),
-            ("Dialogue Systems", ["FAQ Chatbot", "Multilingual Question Answering System", "RAG-Based Document Chatbot"]),
+            ("Dialogue Systems", ["FAQ Chatbot", "Multilingual Question Answering System", "RAG-Based Document Chatbot", "Finance Agentic AI Chatbot"]),
             ("Specialized Tasks", ["Information Retrieval Engine", "Domain-Specific Chatbot"]),
         ],
     },
@@ -73,7 +73,7 @@ PROJECT_PROFILES = {
     "FAQ Chatbot": "faq_chatbot",
     "Information Retrieval Engine": "information_retrieval_engine",
     "Domain-Specific Chatbot": "domain_chatbot",
-    "English to Spanish Translator": "english_to_spanish_translator",
+    "Finance Agentic AI Chatbot": "finance_agentic_chatbot",
     "Grammar Corrector": "grammar_corrector",
     "Context-Aware Chatbot": "context_aware_chatbot",
     "Code Generator [Simple Python]": "code_generator",
@@ -338,29 +338,47 @@ def _project_demo(name):
         render_app(embed=True)
         return
     if name == "RAG-Based Document Chatbot":
-        st.markdown("Choose the PDF processing pipeline to open.")
-        digital, scanned, math = st.columns(3)
-        if digital.button(
-            "Standard Digital PDFs",
-            key="rag-standard-pdf",
-            use_container_width=True,
-        ):
-            st.query_params["nlp_view"] = "rag_standard"
-            st.rerun()
-        if scanned.button(
-            "Scanned / Image-based PDFs",
-            key="rag-scanned-pdf",
-            use_container_width=True,
-        ):
-            st.query_params["nlp_view"] = "rag_scanned"
-            st.rerun()
-        if math.button(
-            "Math & Equations",
-            key="rag-math-pdf",
-            use_container_width=True,
-        ):
-            st.query_params["nlp_view"] = "rag_math"
-            st.rerun()
+        st.markdown("### PDF reading projects")
+        st.caption("Choose a reader tuned to the content in your PDF.")
+        projects = [
+            (
+                "📄",
+                "Standard Digital PDFs",
+                "Read searchable PDF text and ask grounded questions with page citations.",
+                "rag_standard",
+            ),
+            (
+                "🔎",
+                "Scanned / Image-based PDFs",
+                "Run OCR on scanned pages before searching and chatting.",
+                "rag_scanned",
+            ),
+            (
+                "✍️",
+                "Handwritten PDF Intelligence",
+                "Read handwritten notes, letters, forms, and calculations with page-aware OCR.",
+                "rag_handwritten",
+            ),
+            (
+                "∑",
+                "Math & Equations",
+                "Extract mathematical notation and ask questions about equations.",
+                "rag_math",
+            ),
+        ]
+        columns = st.columns(2)
+        for index, (icon, title, description, destination) in enumerate(projects):
+            with columns[index % 2]:
+                with st.container(border=True):
+                    st.markdown(f"## {icon} {title}")
+                    st.write(description)
+                    if st.button(
+                        "Open Chatbot",
+                        key=f"{destination}-open",
+                        use_container_width=True,
+                    ):
+                        st.query_params["nlp_view"] = destination
+                        st.rerun()
         return
     if name in PROJECT_PROFILES:
         from nlp.common.apps import render_app
@@ -375,7 +393,7 @@ def _project_demo(name):
         "Resume Parsers": "Jordan Lee | jordan.lee@example.com | Python, SQL, NLP",
         "Entity Extractor from Contracts": "Agreement between Acme Corp and Jordan Lee, dated March 12, 2025. Payment of $12,500 USD is due.",
         "Medical NER": "Patient reports fever and cough and takes aspirin.",
-        "English to Spanish Translator": "thank you",
+        "Finance Agentic AI Chatbot": "How can I build a monthly budget?",
         "Grammar Corrector": "their is a teh typo",
         "Context-Aware Chatbot": "How can I summarize this text?",
         "Code Generator [Simple Python]": "Write a Python word count function",
@@ -467,17 +485,6 @@ def _project_demo(name):
         st.write("**Draft summary**")
         st.info(summary or "Enter text to generate a summary.")
         st.caption("The abstractive example is a simple local heuristic, not a generative language model.")
-    elif name == "English to Spanish Translator":
-        phrase_map = {
-            "hello": "hola", "good morning": "buenos días", "thank you": "gracias",
-            "how are you": "¿cómo estás?", "goodbye": "adiós", "i love language": "me encanta el idioma",
-            "the cat is happy": "el gato está feliz", "where is the station": "¿dónde está la estación?",
-        }
-        source = st.text_input("English phrase", text)
-        translated = phrase_map.get(source.strip().lower(), " ".join(phrase_map.get(word.lower(), f"[{word}]") for word in source.split()))
-        st.write("**Spanish demo output**")
-        st.info(translated)
-        st.caption("A small phrase dictionary demonstrates sequence-to-sequence translation; unknown words are shown in brackets.")
     elif name == "Grammar Corrector":
         corrections = {
             r"\btheir is\b": "there is", r"\bi has\b": "I have", r"\bhe don't\b": "he doesn't",
@@ -495,10 +502,8 @@ def _project_demo(name):
         lowered = prompt.lower()
         if any(word in lowered for word in ("summar", "shorten", "brief")):
             answer = "I can help summarize: select the Extractive Text Summarizer in the mind map and paste the passage there."
-        elif any(word in lowered for word in ("translate", "spanish")):
-            answer = "Try the English to Spanish Translator demo with one of its supported sample phrases."
         elif any(word in lowered for word in ("hello", "hi", "hey")):
-            answer = "Hello! I can point you to text processing, summarization, translation, or classification demos."
+            answer = "Hello! I can point you to text processing, finance education, summarization, or classification demos."
         else:
             answer = "I understood your message. This compact context demo keeps the current turn and suggests a related NLP tool."
         st.chat_message("user").write(prompt)
@@ -634,7 +639,7 @@ def render_nlp_workspace(in_dashboard=True):
         return
 
     if view == "rag_standard":
-        if st.button("← Back to PDF pipeline choices", key="nlp-rag-standard-back"):
+        if st.button("← Back to RAG Projects", key="nlp-rag-standard-back"):
             st.query_params["nlp_view"] = "project"
             st.query_params["nlp_node"] = "RAG-Based Document Chatbot"
             st.rerun()
@@ -644,7 +649,7 @@ def render_nlp_workspace(in_dashboard=True):
         return
 
     if view == "rag_scanned":
-        if st.button("← Back to PDF pipeline choices", key="nlp-rag-scanned-back"):
+        if st.button("← Back to RAG Projects", key="nlp-rag-scanned-back"):
             st.query_params["nlp_view"] = "project"
             st.query_params["nlp_node"] = "RAG-Based Document Chatbot"
             st.rerun()
@@ -654,11 +659,21 @@ def render_nlp_workspace(in_dashboard=True):
         return
 
     if view == "rag_math":
-        if st.button("← Back to PDF pipeline choices", key="nlp-rag-math-back"):
+        if st.button("← Back to RAG Projects", key="nlp-rag-math-back"):
             st.query_params["nlp_view"] = "project"
             st.query_params["nlp_node"] = "RAG-Based Document Chatbot"
             st.rerun()
         from nlp.advanced_nlp_and_applications.dialogue_systems.rag_based_document_chatbot.math_equation_rag.app import render_app
+
+        render_app(embed=True)
+        return
+
+    if view == "rag_handwritten":
+        if st.button("← Back to RAG Projects", key="nlp-rag-handwritten-back"):
+            st.query_params["nlp_view"] = "project"
+            st.query_params["nlp_node"] = "RAG-Based Document Chatbot"
+            st.rerun()
+        from nlp.advanced_nlp_and_applications.dialogue_systems.rag_based_document_chatbot.handwritten_pdf_rag.app import render_app
 
         render_app(embed=True)
         return
